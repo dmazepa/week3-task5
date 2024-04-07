@@ -16,7 +16,7 @@ test:
 get:
 	go get
 
-linux:
+linux: format
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -v -o kbot -ldflags "-X="github.com/dmazepa/kbot/cmd.appVersion=${VERSION}
 	docker build . -t ${REGISTRY}/${APP}:${VERSION}
 
