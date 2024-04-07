@@ -18,15 +18,19 @@ get:
 
 linux: format
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -v -o kbot -ldflags "-X="github.com/dmazepa/kbot/cmd.appVersion=${VERSION}
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}
 
 windows:
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -v -o kbot -ldflags "-X="github.com/dmazepa/kbot/cmd.appVersion=${VERSION}
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}
 
 macOS:
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -v -o kbot -ldflags "-X="github.com/dmazepa/kbot/cmd.appVersion=${VERSION}
+
+
+image:
 	docker build . -t ${REGISTRY}/${APP}:${VERSION}
+
+push:
+	docker push ${REGISTRY}/${APP}:${VERSION}
 
 clean:
 	docker rmi ${REGISTRY}/${APP}:${VERSION}
